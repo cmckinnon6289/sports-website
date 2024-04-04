@@ -17,12 +17,20 @@ const date = new Date()
 const dateString = `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`
 
 const todaysEvents = ref(null)
+const schools = ref(null);
 
 onMounted(() => {
   EventService.todaysEvents()
   .then((response) => {
     todaysEvents.value = response.data;
     games = true;
+  })
+  .catch((error) => {
+    console.log(error);
+  }),
+  EventService.getSchools()
+  .then((response) => {
+    schools.value = response.data
   })
   .catch((error) => {
     console.log(error);
@@ -33,12 +41,12 @@ onMounted(() => {
 <template>
   <main class="content">
     <h1 class="title">Welcome to the CISAA Sports Database!</h1>
-    <p>The Conference of Independent Schools of Ontario Athletic Association, or CISAA, is a sports conference for various private schools located primarily in the southern part of the province of Ontario. The CISAA grew out of the Little Big Four conference (Upper Canada College; St. Andrew's College; Ridley College; and Trinity College School (TCS)). Teams for the 37 schools currently in the CISAA regularly compete in numerous sports against public high schools in the Ontario Federation of Schools Athletic Association (OFSAA) provincial championships.</p>
+    <p>The Conference of Independent Schools of Ontario Athletic Association, or CISAA, is a sports conference for various private schools located primarily in the southern part of the province of Ontario. The CISAA grew out of the Little Big Four conference (Upper Canada College, St. Andrew's College, Ridley College, and Trinity College School). Teams for the 37 schools currently in the CISAA regularly compete in numerous sports against public high schools in the Ontario Federation of Schools Athletic Association (OFSAA) provincial championships.</p>
     <hr>
     <div class="upcoming">
       <h2 class="title is-4">Upcoming games for {{ dateString }}</h2>
       <div id="today-games">
-        <table class="table">
+        <table v-if="games" class="table">
           <tbody>
             <tr>
               <th>Home</th>
@@ -50,10 +58,12 @@ onMounted(() => {
             <GameRow v-for="event in todaysEvents" :key="event.id" :game="event"/>
           </tbody>
         </table>
-        <i v-if="!games">No games to display.</i>
+        <i v-else>No games to display.</i>
       </div>
     </div>
-    
+    <hr>
+    <b>temp for debug</b>
+    <RouterLink v-for="school in schools" :key="school.id" :to="{ name: 'school-view', params: { id: school._id } }">{{ school.name }}</RouterLink>
   </main>
 </template>
 

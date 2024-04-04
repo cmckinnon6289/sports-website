@@ -11,9 +11,15 @@ const apiClient = axios.create({
  
 export default {
   allEvents() {
-    return apiClient.get('/api/events/all-events')
+    return apiClient.get('/api/events/all-events');
   },
   todaysEvents() {
-    return apiClient.get('/api/events/today')
+    return apiClient.get('/api/events/today');
+  },
+  getSchool(id) {
+    return apiClient.get(`/api/schools/by-id/${id}`);
+  },
+  getSchools() {
+    return apiClient.get(`/api/schools/`);
   }
 }
