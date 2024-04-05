@@ -8,7 +8,7 @@ defineProps({
   division: String
 })
 
-let games = false;
+let games = 2;
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -24,10 +24,11 @@ onMounted(() => {
   .then((response) => {
     todaysEvents.value = response.data;
     console.log(todaysEvents);
-    games = true;
+    games = 1;
   })
   .catch((error) => {
     console.log(error);
+    games = 0;
   }),
   EventService.getSchools()
   .then((response) => {
@@ -47,7 +48,7 @@ onMounted(() => {
     <div class="upcoming">
       <h2 class="title is-4">Upcoming games for {{ dateString }}</h2>
       <div id="today-games">
-        <table v-if="games" class="table">
+        <table v-if="games === 1" class="table">
           <tbody>
             <tr>
               <th>Home</th>
@@ -59,7 +60,9 @@ onMounted(() => {
             <GameRow v-for="event in todaysEvents" :key="event.id" :game="event"/>
           </tbody>
         </table>
-        <i v-else>No games to display.</i>
+        <i v-else-if="games === 0">No games to display.</i>
+        <i v-else-if="games === 2">Loading games... (if this takes longer than 30 seconds, reload the page)</i>
+        <mark v-else>Error loading games.</mark>
       </div>
       <b>All times are in 24 hour time.</b>
     </div>
