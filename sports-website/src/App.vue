@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <div class="layout">
     <nav class="navbar">
       <div class="navbar-brand">
-        <router-link class="navbar-item link" to="/"><b>CISAA Sports Database</b></router-link>
+        <RouterLink class="navbar-item link" to="/"><b>CISAA Sports Database</b></RouterLink>
         <a role="button" class="navbar-burger" id="burger" aria-label="menu" aria-expanded="false" @click="handleNavbarModal()">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -16,24 +16,21 @@ import { RouterLink, RouterView } from 'vue-router'
       <div class="navbar-menu">
         <div class="navbar-start">
           <span class="navbar-item">
-            <p><b>Tokens:</b> 5</p>
+            <RouterLink class="navbar-item link" :to="{name: 'schedule'}">Schedule</RouterLink>
           </span>
           <span class="navbar-item">
-            <p><b>Number of Districts:</b> 5</p>
+            <RouterLink class="navbar-item link" :to="{name: 'admin-view'}">Administration</RouterLink>
           </span>
         </div>
       </div>
     </nav>
-    <header>
-      <div class="wrapper">
-        
-      </div>
-    </header>
-    <RouterView />
+    <div class="wrapper">
+      <RouterView />
+    </div>
   </div>
 </template>
 
-<style scoped>
+<style>
 nav {
   background: linear-gradient(-90deg, #84cf6a, #16c0b0);
   padding: 16px;
@@ -47,5 +44,9 @@ nav {
   display: inline-flex;
   align-items: center;
   color: black;
+}
+
+.wrapper {
+  padding: 1%;
 }
 </style>

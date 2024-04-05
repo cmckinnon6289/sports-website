@@ -21,5 +21,8 @@ export default {
   },
   getSchools() {
     return apiClient.get(`/api/schools/`);
+  },
+  newEvent(jsonData) {
+    return apiClient.post('/api/events/new-event', jsonData)
   }
 }

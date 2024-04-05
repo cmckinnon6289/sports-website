@@ -72,10 +72,6 @@ onMounted(() => {
   text-align: center;
 }
 
-.content {
-  margin: 1%;
-}
-
 #today-games {
   border: 1px solid black;
 }
