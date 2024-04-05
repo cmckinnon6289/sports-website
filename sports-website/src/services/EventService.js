@@ -16,6 +16,9 @@ export default {
   todaysEvents() {
     return apiClient.get('/api/events/today');
   },
+  getEvent(id) {
+    return apiClient.get(`/api/events/by-id/${id}`);
+  },
   getSchool(id) {
     return apiClient.get(`/api/schools/by-id/${id}`);
   },

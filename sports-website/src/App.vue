@@ -27,6 +27,9 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="wrapper">
       <RouterView />
     </div>
+    <!-- <footer class="footer">
+      <p>Copyright 2024. All rights reserved.</p>
+    </footer> -->
   </div>
 </template>
 
@@ -48,5 +51,11 @@ nav {
 
 .wrapper {
   padding: 1%;
+}
+
+.footer {
+  background-color: black;
+  color: white;
+  width: 100%;
 }
 </style>

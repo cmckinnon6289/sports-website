@@ -34,5 +34,5 @@ var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
         <p>{{ school.description }}</p>
         <p><b>Address: </b>{{ school.location }}</p>
     </div>
-    <p v-else>hello!</p>
+    <p v-else>Loading...</p>
 </template>

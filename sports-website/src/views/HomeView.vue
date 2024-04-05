@@ -23,6 +23,7 @@ onMounted(() => {
   EventService.todaysEvents()
   .then((response) => {
     todaysEvents.value = response.data;
+    console.log(todaysEvents);
     games = true;
   })
   .catch((error) => {
@@ -60,10 +61,13 @@ onMounted(() => {
         </table>
         <i v-else>No games to display.</i>
       </div>
+      <b>All times are in 24 hour time.</b>
     </div>
     <hr>
-    <b>temp for debug</b>
-    <RouterLink v-for="school in schools" :key="school.id" :to="{ name: 'school-view', params: { id: school._id } }">{{ school.name }}</RouterLink>
+    <b>Member schools:</b>
+    <ul>
+      <li v-for="school in schools" :key='school._id'><RouterLink :to="{ name: 'school-view', params: { id: school._id } }">{{ school.name }}</RouterLink></li>
+    </ul>
   </main>
 </template>
 
