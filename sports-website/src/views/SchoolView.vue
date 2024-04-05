@@ -13,6 +13,7 @@ const school = EventService.getSchool(props.id);
 <template>
     <div class="content">
         <h1 class="title">{{ school.name }}</h1>
+        <p>{{ school.description }}</p>
     </div>
 </template>
   
