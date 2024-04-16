@@ -1,5 +1,14 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+
+function handleNavbarModal() {
+  const navbar = document.getElementById('navbar-menu')
+  const burger = document.getElementById('burger');
+  const arr = [navbar,burger]
+  arr.forEach((elem) => {
+    elem.classList.toggle('is-active');
+  })
+}
 </script>
 
 <template>
@@ -13,7 +22,7 @@ import { RouterLink, RouterView } from 'vue-router'
           <span aria-hidden="true"></span>
         </a>
       </div>
-      <div class="navbar-menu">
+      <div class="navbar-menu" id="navbar-menu">
         <div class="navbar-start">
           <span class="navbar-item">
             <RouterLink class="navbar-item link" :to="{name: 'schedule'}">Schedule</RouterLink>
@@ -21,6 +30,14 @@ import { RouterLink, RouterView } from 'vue-router'
           <span class="navbar-item">
             <RouterLink class="navbar-item link" :to="{name: 'admin-view'}">Administration</RouterLink>
           </span>
+        </div>
+        <div class="navbar-end">
+          <span class="navbar-item">
+            <RouterLink class="navbar-item button" :to="{name: 'login'}">Login</RouterLink>
+          </span>
+          <!--<span class="navbar-item">
+            <RouterLink class="navbar-item button is-info" :to="{name: 'register'}">Register</RouterLink>
+          </span>-->
         </div>
       </div>
     </nav>
