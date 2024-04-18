@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import PermsService from '@/services/PermsService.js';
-import store from '@/stores';
+import store from '@/store';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

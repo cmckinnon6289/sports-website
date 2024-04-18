@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import { ref } from 'vue';
-import store from '@/stores/index.js';
+import store from '@/store/index.js';
 import EventService from '@/services/EventService.js';
 
 function handleNavbarModal() {
