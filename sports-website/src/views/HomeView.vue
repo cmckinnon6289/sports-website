@@ -8,7 +8,7 @@ defineProps({
   division: String
 })
 
-let games = 2;
+let games = 1;
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -22,13 +22,16 @@ const schools = ref(null);
 onMounted(() => {
   EventService.todaysEvents()
   .then((response) => {
-    todaysEvents.value = response.data;
-    console.log(todaysEvents);
-    games = 1;
+    if (response.data.code === 'ERR_BAD_REQUEST') {
+      games = -1;
+    } else {
+      todaysEvents.value = response.data;
+      games = 0;
+    }
   })
   .catch((error) => {
     console.log(error);
-    games = 0;
+    games = -1;
   }),
   EventService.getSchools()
   .then((response) => {
@@ -48,7 +51,7 @@ onMounted(() => {
     <div class="upcoming">
       <h2 class="title is-4">Upcoming games for {{ dateString }}</h2>
       <div id="today-games">
-        <table v-if="games === 1" class="table">
+        <table v-if="games === 0" class="table">
           <tbody>
             <tr>
               <th>Home</th>
@@ -60,8 +63,8 @@ onMounted(() => {
             <GameRow v-for="event in todaysEvents" :key="event.id" :game="event"/>
           </tbody>
         </table>
-        <i v-else-if="games === 0">No games to display.</i>
-        <i v-else-if="games === 2">Loading games... (if this takes longer than 30 seconds, reload the page)</i>
+        <i v-else-if="games === -1">No games to display.</i>
+        <i v-else-if="games === 1">Loading games... (if this takes longer than 30 seconds, reload the page)</i>
         <mark v-else>Error loading games.</mark>
       </div>
       <b>All times are in 24 hour time.</b>

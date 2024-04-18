@@ -1,7 +1,7 @@
 // Import Axios for making HTTP requests
 import axios from 'axios'
 
-const API_URL = import.meta.env.AUTH_API ? import.meta.env.AUTH_API : 'http://localhost:621'
+const API_URL = /*import.meta.env.AUTH_API ? import.meta.env.AUTH_API :*/ 'http://localhost:621'
 
 const AuthService = {
   async login(credentials) {

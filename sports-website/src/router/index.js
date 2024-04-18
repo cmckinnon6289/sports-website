@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import PermsService from '@/services/PermsService.js';
+import store from '@/stores';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +36,16 @@ const router = createRouter({
       path: '/admin',
       name: 'admin-view',
       component: () => import('../views/AdminView.vue'),
+      beforeEnter(to, from, next) {
+        const perms = PermsService.getUserPerms();
+        if(store.getters.isLoggedIn && perms >= 1){
+          console.log(perms);
+          next()
+        } else{
+          console.log(`fail ${perms}`);
+          next('/login')
+        }
+      }
     },
     {
       path: '/schedule',

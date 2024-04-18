@@ -1,7 +1,7 @@
 import axios from 'axios'
  
 const apiClient = axios.create({
-  baseURL: 'https://sports-database.onrender.com',
+  baseURL: 'http://localhost:621', // CHANGE BACK
   withCredentials: false,
   headers: {
     Accept: 'application/json',
@@ -14,7 +14,11 @@ export default {
     return apiClient.get('/api/events/all-events');
   },
   todaysEvents() {
-    return apiClient.get('/api/events/today');
+    const events = apiClient.get('/api/events/today');
+    if (events.code === "ERR_BAD_REQUEST") {
+      return -1;
+    }
+    else return events;
   },
   getEvent(id) {
     return apiClient.get(`/api/events/by-id/${id}`);
@@ -27,5 +31,14 @@ export default {
   },
   newEvent(jsonData) {
     return apiClient.post('/api/events/new-event', jsonData)
+  },
+  getLeagues() {
+    return apiClient.get('/api/leagues')
+  },
+  newLeague(jsonData) {
+    return apiClient.post('/api/leagues/new-league', jsonData)
+  },
+  getUserPerms(id) {
+    return apiClient.get(`/api/users/get-perms/${id}`)
   }
 }

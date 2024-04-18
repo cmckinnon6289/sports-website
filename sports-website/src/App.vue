@@ -1,5 +1,8 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router';
+import { ref } from 'vue';
+import store from '@/stores/index.js';
+import EventService from '@/services/EventService.js';
 
 function handleNavbarModal() {
   const navbar = document.getElementById('navbar-menu')
@@ -7,6 +10,30 @@ function handleNavbarModal() {
   const arr = [navbar,burger]
   arr.forEach((elem) => {
     elem.classList.toggle('is-active');
+  })
+}
+
+async function logout() {
+  try {
+    // await this.loginUser({ email: this.email, password: this.password });
+    await store.dispatch('logoutUser');
+
+    // If login successful, redirect to dashboard or desired page
+    document.location.href="/";
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const perms = ref(null);
+if(store.getters.isLoggedIn) {
+  EventService.getUserPerms(store.getters.currentUser._id)
+  .then((response) => {
+    perms.value = response.data;
+    console.log(perms.value);
+  })
+  .catch((error) => {
+    console.log(error);
   })
 }
 </script>
@@ -28,16 +55,16 @@ function handleNavbarModal() {
             <RouterLink class="navbar-item link" :to="{name: 'schedule'}">Schedule</RouterLink>
           </span>
           <span class="navbar-item">
-            <RouterLink class="navbar-item link" :to="{name: 'admin-view'}">Administration</RouterLink>
+            <RouterLink class="navbar-item link" :to="{name: 'admin-view'}" v-if="perms >= 1">Administration</RouterLink>
           </span>
         </div>
         <div class="navbar-end">
           <span class="navbar-item">
-            <RouterLink class="navbar-item button" :to="{name: 'login'}">Login</RouterLink>
+            <RouterLink class="navbar-item button" :to="{name: 'login'}" v-if="!$store.state.user.isLoggedIn">Login</RouterLink>
           </span>
-          <!--<span class="navbar-item">
-            <RouterLink class="navbar-item button is-info" :to="{name: 'register'}">Register</RouterLink>
-          </span>-->
+          <span class="navbar-item">
+            <button class="navbar-item button is-danger" @click="logout" v-if="$store.state.user.isLoggedIn">Logout</button>
+          </span>
         </div>
       </div>
     </nav>
