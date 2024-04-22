@@ -7,6 +7,7 @@ let game = props.game;
 game.date = new Date(props.game.date);
 game.date = timezoneAdjust(game.date);
 let timeString = `${game.date.getHours()}:${game.date.getMinutes()}`
+const dateString = `${game.date.getDate()} ${game.date.getMonth()} ${game.date.getFullYear()}`
 if (game.date.getMinutes() < 10) timeString = `${game.date.getHours()}:0${game.date.getMinutes()}`
 
 function timezoneAdjust(dateObj) {
@@ -23,6 +24,7 @@ function timezoneAdjust(dateObj) {
     <tr>
         <td>{{ game.homeTeam.name }}</td>
         <td>{{ game.awayTeam.name }}</td>
+        <td>{{ dateString }}</td>
         <td>{{ timeString }}</td>
         <td>{{ game.location }}</td>
         <td><RouterLink :to="{name: 'game-view', params: {id: game._id}}">View more details</RouterLink></td>
